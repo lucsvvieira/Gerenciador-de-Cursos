@@ -30,6 +30,8 @@ class RealizarLogin implements InterfaceControladorRequisicao
             echo "E-mail e/ou senha incorretos";
             return;
         }
+        
+        $_SESSION['logado'] = true;
 
         header('Location: /listar-cursos');
     }
