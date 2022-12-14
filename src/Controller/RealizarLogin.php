@@ -18,7 +18,9 @@ class RealizarLogin implements InterfaceControladorRequisicao
         $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
 
         if(is_null($email) || $email === false) {
-            echo "O e-mail digitado está incorreto";
+            $_SESSION['tipo_mensagem'] = 'danger';
+            $_SESSION['mensagem'] = "O e-mail digitado não é um e-mail válido";
+            header('Location: /login');
             return;
         }
 
@@ -27,7 +29,9 @@ class RealizarLogin implements InterfaceControladorRequisicao
         $usuario = $this->repositorioDeUsuarios->findOneBy(['email' => $email]);
 
         if (is_null($usuario) || !$usuario->senhaEstaCorreta($senha)) {
-            echo "E-mail e/ou senha incorretos";
+            $_SESSION['tipo_mensagem'] = 'danger';
+            $_SESSION['mensagem'] = "E-mail e/ou senha incorretos";
+            header('Location: /login');
             return;
         }
         
